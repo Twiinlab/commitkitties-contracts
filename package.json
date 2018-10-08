@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "axios": "^0.18.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.12.0",
@@ -25,6 +26,13 @@
     "bail": true,
     "restoreMocks": true,
     "testEnvironment": "node"
+  },
+  "devDependencies": {
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-preset-stage-3": "^6.17.0",
+    "babel-register": "^6.23.0"
   },
   "license": "MIT"
 }

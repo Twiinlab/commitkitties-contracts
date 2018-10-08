@@ -1,4 +1,5 @@
 const ganache = require('ganache-cli')
+const axios = require('axios')
 const config = require('./config/config.json')
 // const fs = require('fs')
 // const Cheshire = require('./lib/cheshire.js')
@@ -27,6 +28,29 @@ const Server = {
           process.exit(1)
         }
       })
+  },
+
+  async initKittiest(){
+      // const attrsApi = await this.fetchAttrsApi(addressMainnet)
+      // attrsApi.address = addressTestnet
+  
+      // this.db.run('UPDATE users SET address_mainnet=?, api_object=? WHERE address_testnet=?', addressMainnet, JSON.stringify(attrsApi), addressTestnet)
+  
+      const { kitties } = (await axios.get(`https://api.cryptokitties.co/kitties?offset=0&&limit=20`)).data
+  
+      for (const kitty of kitties) {
+        await Kitty.importKitty(kitty.id, config.addressKittyCoreMainnet) // eslint-disable-line no-await-in-loop
+      }
+  
+      module.exports = async function importBugCat(cheshire) {
+        const bugCatIdMainnet = 101
+        const ownerTestnet = cheshire.accounts[0].address
+        const kittyIdTestnet = await cheshire.importKitty(bugCatIdMainnet, ownerTestnet)
+      
+        console.log(`Kitty #${kittyIdTestnet} => ${ownerTestnet}`)
+      }
+      
+      return config.addressKittyCoreMainnet
   },
 
 //   async compileContracts() {
@@ -110,6 +134,7 @@ const Server = {
 
   async start() {
     await this.startTestnet()
+    await this.initKittiest();
     // await this.compileContracts()
     // await this.deployContracts()
     // await this.startApiServer()
