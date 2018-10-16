@@ -1,3 +1,3 @@
-# MetaCoin Truffle Box
+# Commitkitties
 
-MetaCoin example Truffle project
+Commitkitties

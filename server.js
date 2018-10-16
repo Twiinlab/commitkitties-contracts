@@ -1,12 +1,14 @@
 const ganache = require('ganache-cli')
 const axios = require('axios')
 const config = require('./config/config.json')
+const Contract  = require('./lib/contract.js')
+const Kitty = require('./lib/kitty.js')
+const { exec } = require('child_process')
+
 // const fs = require('fs')
 // const Cheshire = require('./lib/cheshire.js')
 // const path = require('path')
-// const { exec } = require('child_process')
 // const Api = require('./api')
-// const Contract = require('./lib/contract.js')
 // const User = require('./lib/user.js')
 
 const { log } = console
@@ -37,63 +39,79 @@ const Server = {
       // this.db.run('UPDATE users SET address_mainnet=?, api_object=? WHERE address_testnet=?', addressMainnet, JSON.stringify(attrsApi), addressTestnet)
   
       const { kitties } = (await axios.get(`https://api.cryptokitties.co/kitties?offset=0&&limit=20`)).data
-  
+      let newKitty;
+      const mainAccount = Contract.accounts[0];
+
       for (const kitty of kitties) {
-        await Kitty.importKitty(kitty.id, config.addressKittyCoreMainnet) // eslint-disable-line no-await-in-loop
+        //call Smarcontract
+        
+        await Kitty.importKitty(kitty.id, mainAccount);
+
+        // newKitty = await Kitty.createKitty(kitty.matron.id, kitty.sire.id, kitty.generation, kitty.id, kitty.owner.address) // eslint-disable-line no-await-in-loop
+        console.log(`Kitty #${kitty.id} => ${JSON.stringify(kitty)}`)
+      
       }
   
-      module.exports = async function importBugCat(cheshire) {
-        const bugCatIdMainnet = 101
-        const ownerTestnet = cheshire.accounts[0].address
-        const kittyIdTestnet = await cheshire.importKitty(bugCatIdMainnet, ownerTestnet)
+      // module.exports = async function importBugCat(cheshire) {
+      //   const bugCatIdMainnet = 101
+      //   const ownerTestnet = cheshire.accounts[0].address
+      //   const kittyIdTestnet = await cheshire.importKitty(bugCatIdMainnet, ownerTestnet)
       
-        console.log(`Kitty #${kittyIdTestnet} => ${ownerTestnet}`)
-      }
+      //   console.log(`Kitty #${kittyIdTestnet} => ${ownerTestnet}`)
+      // }
       
       return config.addressKittyCoreMainnet
   },
 
-//   async compileContracts() {
-//     log('> Compiling contracts...')
+  async compileContracts() {
+    log('> Compiling contracts...')
 
-//     return new Promise((resolve, reject) => {
-//       const child = exec('truffle compile')
-//       child.stdout.pipe(process.stdout)
-//       child.stderr.pipe(process.stderr)
-//       child.on('error', log)
-//       child.on('close', (code) => {
-//         if (code === 0) {
-//           resolve()
-//         } else {
-//           log('Exited with code', code)
-//           reject()
-//         }
-//       })
-//     })
-//   },
+    return new Promise((resolve, reject) => {
+      const child = exec('truffle compile')
+      child.stdout.pipe(process.stdout)
+      child.stderr.pipe(process.stderr)
+      child.on('error', log)
+      child.on('close', (code) => {
+        if (code === 0) {
+          resolve()
+        } else {
+          log('Exited with code', code)
+          reject()
+        }
+      })
+    })
+  },
 
-//   async deployContracts() {
-//     log('> Deploying CryptoKitties contracts to testnet...')
+  async deployContracts() {
+    log('> Deploying CryptoKitties contracts to testnet...')
 
-//     const ownerCut = 375
+    const ownerCut = 375
 
-//     const kittyCore = await Contract.deploy('KittyCore')
-//     const saleClockAuction = await Contract.deploy('SaleClockAuction', kittyCore.address, ownerCut)
-//     const siringClockAuction = await Contract.deploy('SiringClockAuction', kittyCore.address, ownerCut)
-//     const geneScience = await Contract.deploy('GeneScience')
+    const kittyCore = await Contract.deploy('KittyCore')
+    const saleClockAuction = await Contract.deploy('SaleClockAuction', kittyCore.address, ownerCut)
+    const siringClockAuction = await Contract.deploy('SiringClockAuction', kittyCore.address, ownerCut)
+    const geneScience = await Contract.deploy('GeneScience')
 
-//     await kittyCore.setSaleAuctionAddress(saleClockAuction.address)
-//     await kittyCore.setSiringAuctionAddress(siringClockAuction.address)
-//     await kittyCore.setGeneScienceAddress(geneScience.address)
-//     await kittyCore.unpause()
+    await kittyCore.setSaleAuctionAddress(saleClockAuction.address)
+    await kittyCore.setSiringAuctionAddress(siringClockAuction.address)
+    await kittyCore.setGeneScienceAddress(geneScience.address)
+    await kittyCore.unpause()
 
-//     return {
-//       kittyCore: kittyCore.address,
-//       saleClockAuction: saleClockAuction.address,
-//       siringClockAuction: siringClockAuction.address,
-//       geneScience: geneScience.address,
-//     }
-//   },
+    try {
+      await Contract.register('KittyCore', kittyCore.address);
+      await Contract.register('SaleClockAuction', saleClockAuction.address);
+      await Contract.register('SiringClockAuction', siringClockAuction.address);
+    } catch (error) {
+      console.log(error);
+    }
+
+    return {
+      kittyCore: kittyCore.address,
+      saleClockAuction: saleClockAuction.address,
+      siringClockAuction: siringClockAuction.address,
+      geneScience: geneScience.address,
+    }
+  },
 
 //   async startApiServer() {
 //     log('> Starting local CryptoKitties API server...')
@@ -133,10 +151,10 @@ const Server = {
 //   },
 
   async start() {
-    await this.startTestnet()
+    // await this.startTestnet()
+    await this.compileContracts() 
+    await this.deployContracts()
     await this.initKittiest();
-    // await this.compileContracts()
-    // await this.deployContracts()
     // await this.startApiServer()
     // await this.loadAccounts()
     // await this.runSetupScript()

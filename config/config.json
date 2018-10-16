@@ -11,9 +11,10 @@
       { "address": "0x78788b7ad356053068619f399497712d423eb1e9", "secretKey": "0x44d6627a1e7dcb0d0c353a067ad901449d756c97b38b4feb99c0e752fbbb80d1", "balance": 1000000000000000000000 },
       { "address": "0xcdf40e926a778d93429b72c341b4a9e0ee8624c4", "secretKey": "0x6e77cfded732de6d423abcaccc45ee8c4bdc2eb3c0c47938acb386ac17c496b8", "balance": 1000000000000000000000 }
     ],
-    "ethNodeMainnet": "https://mainnet.infura.io/zLnbh6raC9FoqZqNzfAo",
+    "ethNodeMainnet": "https://mainnet.infura.io/2nluVzjZVelxFadFKD0f",
+    "ethNodeRinkeby": "https://rinkeby.infura.io/2nluVzjZVelxFadFKD0f",
     "addressKittyCoreMainnet": "0x06012c8cf97bead5deae237070f9587f8e7a266d",
-    "portTestnet": 8546,
+    "portTestnet": 8545, 
     "portApi": 4000,
     "rinkeby": {
         "account": {

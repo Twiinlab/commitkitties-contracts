@@ -1,14 +1,4 @@
 {
-  "dependencies": {
-    "axios": "^0.18.0",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-import": "^2.12.0",
-    "ganache-cli": "^6.1.0",
-    "truffle": "^4.1.11",
-    "truffle-contract": "^3.0.5",
-    "web3": "v0.20.6"
-  },
   "scripts": {
     "start": "node server.js",
     "eslint": "eslint .",
@@ -26,6 +16,16 @@
     "bail": true,
     "restoreMocks": true,
     "testEnvironment": "node"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.12.0",
+    "ganache-cli": "^6.1.0",
+    "truffle": "^4.1.11",
+    "truffle-contract": "^3.0.5",
+    "web3": "v0.20.6"
   },
   "devDependencies": {
     "babel-polyfill": "^6.26.0",
