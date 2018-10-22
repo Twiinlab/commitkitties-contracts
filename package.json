@@ -1,6 +1,8 @@
 {
   "scripts": {
     "start": "node server.js",
+    "start:dev": "NODE_ENV=dev node server.js",
+    "start:pro": "NODE_ENV=pro node server.js",
     "eslint": "eslint .",
     "test": "jest --coverage",
     "test-ci": "jest --coverage --coverageReporters=text-lcov | coveralls"

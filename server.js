@@ -1,6 +1,6 @@
 const ganache = require('ganache-cli')
 const axios = require('axios')
-const config = require('./config/config.json')
+const config = require('./config')
 const Contract  = require('./lib/contract.js')
 const Kitty = require('./lib/kitty.js')
 const { exec } = require('child_process')
@@ -62,6 +62,7 @@ const Server = {
       
       return config.addressKittyCoreMainnet
   },
+
 
   async compileContracts() {
     log('> Compiling contracts...')
@@ -155,6 +156,7 @@ const Server = {
     await this.compileContracts() 
     await this.deployContracts()
     await this.initKittiest();
+
     // await this.startApiServer()
     // await this.loadAccounts()
     // await this.runSetupScript()

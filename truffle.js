@@ -1,4 +1,4 @@
-const config = require('./config/config.json')
+const config = require('./config');
 
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
