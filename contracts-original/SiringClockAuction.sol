@@ -75,58 +75,6 @@ contract ERC721 {
 
 
 
-/**
- * @title Pausable
- * @dev Base contract which allows children to implement an emergency stop mechanism.
- */
-contract Pausable is Ownable {
-  event Pause();
-  event Unpause();
-
-  bool public paused = false;
-
-
-  /**
-   * @dev modifier to allow actions only when the contract IS paused
-   */
-  modifier whenNotPaused() {
-    require(!paused);
-    _;
-  }
-
-  /**
-   * @dev modifier to allow actions only when the contract IS NOT paused
-   */
-  modifier whenPaused {
-    require(paused);
-    _;
-  }
-
-  /**
-   * @dev called by the owner to pause, triggers stopped state
-   */
-  function pause() onlyOwner whenNotPaused returns (bool) {
-    paused = true;
-    Pause();
-    return true;
-  }
-
-  /**
-   * @dev called by the owner to unpause, returns to normal state
-   */
-  function unpause() onlyOwner whenPaused returns (bool) {
-    paused = false;
-    Unpause();
-    return true;
-  }
-}
-
-
-
-
-
-
-
 /// @title Auction Core
 /// @dev Contains models, variables, and internal methods for the auction.
 /// @notice We omit a fallback function to prevent accidental sends to this contract.
@@ -305,7 +253,12 @@ contract ClockAuctionBase {
             secondsPassed = now - _auction.startedAt;
         }
 
-        return _auction.startingPrice;
+        return _computeCurrentPrice(
+            _auction.startingPrice,
+            _auction.endingPrice,
+            _auction.duration,
+            secondsPassed
+        );
     }
 
     /// @dev Computes the current price of an auction. Factored out
@@ -363,6 +316,56 @@ contract ClockAuctionBase {
 }
 
 
+
+
+
+
+
+/**
+ * @title Pausable
+ * @dev Base contract which allows children to implement an emergency stop mechanism.
+ */
+contract Pausable is Ownable {
+  event Pause();
+  event Unpause();
+
+  bool public paused = false;
+
+
+  /**
+   * @dev modifier to allow actions only when the contract IS paused
+   */
+  modifier whenNotPaused() {
+    require(!paused);
+    _;
+  }
+
+  /**
+   * @dev modifier to allow actions only when the contract IS NOT paused
+   */
+  modifier whenPaused {
+    require(paused);
+    _;
+  }
+
+  /**
+   * @dev called by the owner to pause, triggers stopped state
+   */
+  function pause() onlyOwner whenNotPaused returns (bool) {
+    paused = true;
+    Pause();
+    return true;
+  }
+
+  /**
+   * @dev called by the owner to unpause, returns to normal state
+   */
+  function unpause() onlyOwner whenPaused returns (bool) {
+    paused = false;
+    Unpause();
+    return true;
+  }
+}
 
 
 /// @title Clock auction for non-fungible tokens.
@@ -520,23 +523,20 @@ contract ClockAuction is Pausable, ClockAuctionBase {
 }
 
 
-/// @title Clock auction modified for sale of kitties
+/// @title Reverse auction modified for siring
 /// @notice We omit a fallback function to prevent accidental sends to this contract.
-contract SaleClockAuction is ClockAuction {
+contract SiringClockAuction is ClockAuction {
 
     // @dev Sanity check that allows us to ensure that we are pointing to the
-    //  right auction in our setSaleAuctionAddress() call.
-    bool public isSaleClockAuction = true;
-    
-    // Tracks last 5 sale price of gen0 kitty sales
-    uint256 public gen0SaleCount;
-    uint256[5] public lastGen0SalePrices;
+    //  right auction in our setSiringAuctionAddress() call.
+    bool public isSiringClockAuction = true;
 
     // Delegate constructor
-    function SaleClockAuction(address _nftAddr, uint256 _cut) public
+    function SiringClockAuction(address _nftAddr, uint256 _cut) public
         ClockAuction(_nftAddr, _cut) {}
 
-    /// @dev Creates and begins a new auction.
+    /// @dev Creates and begins a new auction. Since this function is wrapped,
+    /// require sender to be KittyCore contract.
     /// @param _tokenId - ID of token to auction, sender must be owner.
     /// @param _startingPrice - Price of item (in wei) at beginning of auction.
     /// @param _endingPrice - Price of item (in wei) at end of auction.
@@ -569,31 +569,21 @@ contract SaleClockAuction is ClockAuction {
         _addAuction(_tokenId, auction);
     }
 
-    /// @dev Updates lastSalePrice if seller is the nft contract
-    /// Otherwise, works the same as default bid method.
+    /// @dev Places a bid for siring. Requires the sender
+    /// is the KittyCore contract because all bid methods
+    /// should be wrapped. Also returns the kitty to the
+    /// seller rather than the winner.
     function bid(uint256 _tokenId)
         external
         payable
     {
-        // _bid verifies token ID size
+        require(msg.sender == address(nonFungibleContract));
         address seller = tokenIdToAuction[_tokenId].seller;
-        uint256 price = _bid(_tokenId, msg.value);
-        _transfer(msg.sender, _tokenId);
-
-        // If not a gen0 auction, exit
-        if (seller == address(nonFungibleContract)) {
-            // Track gen0 sale prices
-            lastGen0SalePrices[gen0SaleCount % 5] = price;
-            gen0SaleCount++;
-        }
-    }
-
-    function averageGen0SalePrice() external view returns (uint256) {
-        uint256 sum = 0;
-        for (uint256 i = 0; i < 5; i++) {
-            sum += lastGen0SalePrices[i];
-        }
-        return sum / 5;
+        // _bid checks that token ID is valid and will throw if bid fails
+        _bid(_tokenId, msg.value);
+        // We transfer the kitty back to the seller, the winner will get
+        // the offspring
+        _transfer(seller, _tokenId);
     }
 
 }

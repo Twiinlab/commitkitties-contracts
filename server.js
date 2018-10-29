@@ -49,7 +49,7 @@ const Server = {
 
         // newKitty = await Kitty.createKitty(kitty.matron.id, kitty.sire.id, kitty.generation, kitty.id, kitty.owner.address) // eslint-disable-line no-await-in-loop
         console.log(`Kitty #${kitty.id} => ${JSON.stringify(kitty)}`)
-      
+    
       }
   
       // module.exports = async function importBugCat(cheshire) {
@@ -152,7 +152,9 @@ const Server = {
 //   },
 
   async start() {
+
     // await this.startTestnet()
+
     await this.compileContracts() 
     await this.deployContracts()
     await this.initKittiest();
