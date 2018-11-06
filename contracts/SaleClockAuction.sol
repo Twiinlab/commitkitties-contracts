@@ -305,7 +305,7 @@ contract ClockAuctionBase {
             secondsPassed = now - _auction.startedAt;
         }
 
-        return _auction.startingPrice;
+        return uint256(_auction.startingPrice);
     }
 
     /// @dev Computes the current price of an auction. Factored out
