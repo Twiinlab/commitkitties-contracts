@@ -17,14 +17,5 @@
   "ethNodeRinkeby": "https://rinkeby.infura.io/2nluVzjZVelxFadFKD0f",
   "addressKittyCoreMainnet": "0x06012c8cf97bead5deae237070f9587f8e7a266d",
   "portTestnet": 8545, 
-  "portApi": 4000,
-  "rinkeby": {
-      "account": {
-          "address": "0x359247c938ea24Aef9e30fDD8eaa0F39DCbB2249",
-          "key": "92EAE2BCD7BCF17BF9FA0E82DE08393BF5D67AB9203C704A95CC793F25A1E37C"
-      }
-  },
-  "ganache": {
-    "mnemonic": "cargo little forum bring connect ready old matter accident ability never thumb"
-  }
+  "portApi": 4000
 }  

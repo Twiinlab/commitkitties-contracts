@@ -40,7 +40,7 @@ const Server = {
   
       const { kitties } = (await axios.get(`https://api.cryptokitties.co/kitties?offset=0&&limit=20`)).data
       let newKitty;
-      const mainAccount = Contract.accounts[0];
+      const mainAccount = Contract.mainAccount;
 
       for (const kitty of kitties) {
         //call Smarcontract
@@ -103,7 +103,7 @@ const Server = {
       await Contract.register('SaleClockAuction', saleClockAuction.address);
       await Contract.register('SiringClockAuction', siringClockAuction.address);
     } catch (error) {
-      console.log(error);
+      console.log(`ERROR in deploy or register process: ${error}`);
     }
 
     return {
