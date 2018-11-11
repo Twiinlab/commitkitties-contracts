@@ -18,6 +18,21 @@ const config = {
         mnemonic: "cargo little forum bring connect ready old matter accident ability never thumb"
       } 
     },
+    pre: {
+      api: {
+        endpoint: 'http://localhost:8080',
+        base: '/api'
+      },
+      network:{
+        http: "http://35.231.178.158:8545",
+        ws: "ws://35.231.178.158:8545",
+        account: {
+          address: "0x4aaa4e3ce8e9d8a6533b75db54da017e2cf811c8",
+          key: "0xbb73e8a2733d614b215c1a651dd3884cabf1149a6dc847f1b6ce20c9d2f682ce"
+        },
+        mnemonic: "cargo little forum bring connect ready old matter accident ability never thumb"
+      } 
+    },
     pro: {
       api: {
         endpoint: 'https://commitkitties-api.appspot.com',

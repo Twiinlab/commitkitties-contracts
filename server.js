@@ -40,7 +40,7 @@ const Server = {
   
       const { kitties } = (await axios.get(`https://api.cryptokitties.co/kitties?offset=0&&limit=20`)).data
       let newKitty;
-      const mainAccount = Contract.mainAccount;
+      const mainAccount = Contract.mainAccount.address;
 
       for (const kitty of kitties) {
         //call Smarcontract
@@ -84,34 +84,35 @@ const Server = {
   },
 
   async deployContracts() {
-    log('> Deploying CryptoKitties contracts to testnet...')
-
-    const ownerCut = 375
-
-    const kittyCore = await Contract.deploy('KittyCore')
-    const saleClockAuction = await Contract.deploy('SaleClockAuction', kittyCore.address, ownerCut)
-    const siringClockAuction = await Contract.deploy('SiringClockAuction', kittyCore.address, ownerCut)
-    const geneScience = await Contract.deploy('GeneScience')
-
-    await kittyCore.setSaleAuctionAddress(saleClockAuction.address)
-    await kittyCore.setSiringAuctionAddress(siringClockAuction.address)
-    await kittyCore.setGeneScienceAddress(geneScience.address)
-    await kittyCore.unpause()
-
     try {
+      log('> Deploying CryptoKitties contracts to testnet...')
+      
+      const ownerCut = 375
+
+      const kittyCore = await Contract.deploy('KittyCore')
+      const saleClockAuction = await Contract.deploy('SaleClockAuction', kittyCore.address, ownerCut)
+      const siringClockAuction = await Contract.deploy('SiringClockAuction', kittyCore.address, ownerCut)
+      const geneScience = await Contract.deploy('GeneScience')
+
+      await kittyCore.setSaleAuctionAddress(saleClockAuction.address)
+      await kittyCore.setSiringAuctionAddress(siringClockAuction.address)
+      await kittyCore.setGeneScienceAddress(geneScience.address)
+      await kittyCore.unpause()
+
       await Contract.register('KittyCore', kittyCore.address);
       await Contract.register('SaleClockAuction', saleClockAuction.address);
       await Contract.register('SiringClockAuction', siringClockAuction.address);
+
+      return {
+        kittyCore: kittyCore.address,
+        saleClockAuction: saleClockAuction.address,
+        siringClockAuction: siringClockAuction.address,
+        geneScience: geneScience.address,
+      }
     } catch (error) {
       console.log(`ERROR in deploy or register process: ${error}`);
     }
 
-    return {
-      kittyCore: kittyCore.address,
-      saleClockAuction: saleClockAuction.address,
-      siringClockAuction: siringClockAuction.address,
-      geneScience: geneScience.address,
-    }
   },
 
 //   async startApiServer() {
