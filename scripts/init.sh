@@ -50,3 +50,6 @@ SaleClockAuction.at("0x7639579dbcb28ef5af8f4fd9f7e6f3296e7fedb9").then(function(
 SaleClockAuction.at("0x62f29d2be20c5b179a82b7977f7160c8b0b56e3a").then(function(instance){ return instance.bid("1",{from: "0x6999e1d9ec10d0b0d06c657e289f55a2e17dea64", value:"100"});}).then(function(result){console.log(result);})
 
 KittyCore.at("0x2b7ec3747c6d4ebfd79512ac2ad32c189afe911c").then(function(instance){ return instance.kittyIndexToOwner("10");}).then(function(result){console.log(result);})
+
+docker run -d -p 8545:8545 trufflesuite/ganache-cli:latest -h 0.0.0.0 -m 'cargo little foru
+m bring connect ready old matter accident ability never thumb'

@@ -6,8 +6,13 @@ module.exports = {
   networks: {
     development: {
       host: 'localhost',
-      port: config.portTestnet,
-      network_id: 1337,
+      port: 8545,
+      network_id: '*'
+    },
+    gcloud: {
+      host: '35.231.178.158',
+      port: 8545,
+      network_id: '*'
     },
   },
 };
