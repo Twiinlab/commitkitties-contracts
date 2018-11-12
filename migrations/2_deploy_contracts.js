@@ -4,9 +4,14 @@ const KittyCore = artifacts.require("./KittyCore.sol")
 const SaleClockAuction = artifacts.require("./SaleClockAuction.sol")
 const SiringClockAuction = artifacts.require("./SiringClockAuction.sol")
 
+const Contract = require("../lib/contract")
+
+
 module.exports = (deployer, network) => {
   deployer.then(async () => {
     
+    console.log('Init KittyCore deployment')
+
     const kittyCore = await deployer.deploy(KittyCore)
     console.log('KittyCore contract deployed at', kittyCore.address)
 
@@ -25,7 +30,16 @@ module.exports = (deployer, network) => {
     await kittyCore.setSiringAuctionAddress(siringClockAuction.address)
     await kittyCore.setGeneScienceAddress(geneScience.address)
     await kittyCore.unpause()
-
     console.log('KittyCore unpaused')
+
+
+    console.log('register Contracts')
+    await Contract.register('KittyCore', kittyCore.address);
+    console.log(`KittyCore registered in ${kittyCore.address}`);
+    await Contract.register('SaleClockAuction', saleClockAuction.address);
+    console.log(`SaleClockAuction registered in ${saleClockAuction.address}`);
+    await Contract.register('SiringClockAuction', siringClockAuction.address);
+    console.log(`SiringClockAuction registered in ${ siringClockAuction.address}`);
+
   })
 }

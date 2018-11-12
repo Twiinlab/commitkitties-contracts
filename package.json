@@ -30,6 +30,7 @@
     "lodash": "^4.17.11",
     "truffle": "^4.1.11",
     "truffle-contract": "^3.0.5",
+    "truffle-hdwallet-provider": "0.0.6",
     "web3": "v0.20.6"
   },
   "devDependencies": {

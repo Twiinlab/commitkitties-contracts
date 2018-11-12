@@ -25,6 +25,12 @@ Private Keys
 (9) 0xe84769a7ed5838f8039dbc02ffb7c14981322a5b422b1748402f5eb6fc74e053
 
 
+rinkeby account 
+
+        account: {
+            address: "0x359247c938ea24Aef9e30fDD8eaa0F39DCbB2249",
+            key: "92EAE2BCD7BCF17BF9FA0E82DE08393BF5D67AB9203C704A95CC793F25A1E37C"
+        }
 
 
 web3.eth.account
@@ -51,5 +57,13 @@ SaleClockAuction.at("0x62f29d2be20c5b179a82b7977f7160c8b0b56e3a").then(function(
 
 KittyCore.at("0x2b7ec3747c6d4ebfd79512ac2ad32c189afe911c").then(function(instance){ return instance.kittyIndexToOwner("10");}).then(function(result){console.log(result);})
 
-docker run -d -p 8545:8545 trufflesuite/ganache-cli:latest -h 0.0.0.0 -m 'cargo little foru
-m bring connect ready old matter accident ability never thumb'
+docker run -d -p 8545:8545 trufflesuite/ganache-cli:latest -h 0.0.0.0 -m 'cargo little forum bring connect ready old matter accident ability never thumb'
+
+my local seed 'roof aware length another south suspect dust useful fan toy language wolf'
+address '0x8420AaB0b1a42c26089e696FBeF3e35ec9Da2849'
+key '79A2227E181F91A2CFE1C89394A2BF0D530B83952A83928770F3ABB2070A5F30'
+
+rinkeby
+KittyCore: "0x0c689b182939b29ab4d5c505fe74e17048ff1541"
+SaleClockAuction: "0x83c5a2f16b6e14231c5709c621fb5fd0e3fb4083"
+SiringClockAuction: "0xabb60c3168ef695960cbdcec5df406825957d0c4"
