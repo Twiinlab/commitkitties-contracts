@@ -20,7 +20,7 @@ const config = {
     },
     pre: {
       api: {
-        endpoint: 'http://localhost:8080',
+        endpoint: 'https://pre-dot-commitkitties-api.appspot.com',//'http://localhost:8080',
         base: '/api'
       },
       network:{
@@ -35,7 +35,7 @@ const config = {
     },
     pro: {
       api: {
-        endpoint: 'http://localhost:8080',//'https://commitkitties-api.appspot.com',
+        endpoint: 'https://pro-dot-commitkitties-api.appspot.com', //'http://localhost:8080'
         base: '/api'
       },
       network: {

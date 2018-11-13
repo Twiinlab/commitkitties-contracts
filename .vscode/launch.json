@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "node",
             "request": "launch",
@@ -30,6 +31,28 @@
             "env": {
                 "NODE_ENV": "pro"
             }
-        }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Migration Process (rinkeby)",
+            "program": "${workspaceRoot}/node_modules/truffle/build/cli.bundled.js",
+            "args": ["migration","--network","rinkeby"],
+            "cwd": "${workspaceRoot}",
+            "outFiles": [
+                "${workspaceRoot}/test/**/*"
+            ],
+          },
+          {
+            "type": "node",
+            "request": "launch",
+            "name": "Migration Process (rinkeby) STEP 3",
+            "program": "${workspaceRoot}/node_modules/truffle/build/cli.bundled.js",
+            "args": ["migration","--network","rinkeby","-f","3","--to","3"],
+            "cwd": "${workspaceRoot}",
+            "outFiles": [
+                "${workspaceRoot}/test/**/*"
+            ],
+          },
     ]
 }
