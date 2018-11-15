@@ -156,8 +156,8 @@ const Server = {
 
     // await this.startTestnet()
 
-    await this.compileContracts() 
-    await this.deployContracts()
+    // await this.compileContracts() 
+    // await this.deployContracts()
     await this.initKittiest();
 
     // await this.startApiServer()

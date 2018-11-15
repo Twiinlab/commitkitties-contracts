@@ -20,7 +20,7 @@ const config = {
     },
     pre: {
       api: {
-        endpoint: 'http://localhost:8080',
+        endpoint: 'https://pre-dot-commitkitties-api.appspot.com',//'http://localhost:8080',
         base: '/api'
       },
       network:{
@@ -35,16 +35,17 @@ const config = {
     },
     pro: {
       api: {
-        endpoint: 'https://commitkitties-api.appspot.com',
+        endpoint: 'https://pro-dot-commitkitties-api.appspot.com', //'http://localhost:8080'
         base: '/api'
       },
       network: {
-        http: "https://rinkeby.infura.io/2nluVzjZVelxFadFKD0f",
-        ws: "wss://rinkeby.infura.io/2nluVzjZVelxFadFKD0f",
+        http: "https://rinkeby.infura.io/v3/b97d8303c3d84cf8bb43c325612ae8a7",
+        ws: "wss://rinkeby.infura.io/v3/b97d8303c3d84cf8bb43c325612ae8a7",
         account: {
-            address: "0x359247c938ea24Aef9e30fDD8eaa0F39DCbB2249",
-            key: "92EAE2BCD7BCF17BF9FA0E82DE08393BF5D67AB9203C704A95CC793F25A1E37C"
-        }
+            address: "0x8420AaB0b1a42c26089e696FBeF3e35ec9Da2849",
+            key: "79A2227E181F91A2CFE1C89394A2BF0D530B83952A83928770F3ABB2070A5F30"
+        },
+        mnemonic: "roof aware length another south suspect dust useful fan toy language wolf"
       }
     }
 };
