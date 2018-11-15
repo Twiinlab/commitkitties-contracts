@@ -14,5 +14,10 @@ module.exports = {
       port: 8545,
       network_id: '*'
     },
+    base: {
+      host: 'commmitkitties-base.appspot.com',
+      port: 8080,
+      network_id: '*'
+    }
   },
 };

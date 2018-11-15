@@ -51,5 +51,4 @@ SaleClockAuction.at("0x62f29d2be20c5b179a82b7977f7160c8b0b56e3a").then(function(
 
 KittyCore.at("0x2b7ec3747c6d4ebfd79512ac2ad32c189afe911c").then(function(instance){ return instance.kittyIndexToOwner("10");}).then(function(result){console.log(result);})
 
-docker run -d -p 8545:8545 trufflesuite/ganache-cli:latest -h 0.0.0.0 -m 'cargo little foru
-m bring connect ready old matter accident ability never thumb'
+docker run -d -p 8545:8545 trufflesuite/ganache-cli:latest -h 0.0.0.0 -m 'cargo little forum bring connect ready old matter accident ability never thumb'
