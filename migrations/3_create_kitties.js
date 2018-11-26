@@ -27,7 +27,8 @@ module.exports = (deployer, network) => {
     // await Contract.register('SiringClockAuction', siringClockAuction.address);
     // console.log(`SiringClockAuction registered in ${ siringClockAuction.address}`);
 
-    const kittyCoreInstance = await KittyCore.at("0x0c689b182939b29ab4d5c505fe74e17048ff1541");
+    let metadataContract = await axios.get(`${config.api.endpoint}${config.api.base}/contracts/KittyCore`);
+    const kittyCoreInstance = await KittyCore.at(metadataContract.address);
 
     const { kitties } = (await axios.get(`https://api.cryptokitties.co/kitties?offset=0&&limit=20`)).data
     const mainAccount = Contract.mainAccount.address;

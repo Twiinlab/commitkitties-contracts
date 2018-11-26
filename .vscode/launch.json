@@ -54,5 +54,16 @@
                 "${workspaceRoot}/test/**/*"
             ],
           },
+          {
+            "type": "node",
+            "request": "launch",
+            "name": "Migration Process (gcloud) STEP 3",
+            "program": "${workspaceRoot}/node_modules/truffle/build/cli.bundled.js",
+            "args": ["migration","--network","gcloud","-f","3","--to","3"],
+            "cwd": "${workspaceRoot}",
+            "outFiles": [
+                "${workspaceRoot}/test/**/*"
+            ],
+          },
     ]
 }

@@ -11,8 +11,13 @@ module.exports = {
       network_id: '*'
     },
     gcloud: {
-      host: '35.231.178.158',
+      host: '35.243.198.50',//'35.196.98.185',
       port: 8545,
+      network_id: '*'
+    },
+    base: {
+      host: 'commmitkitties-base.appspot.com',
+      port: 8080,
       network_id: '*'
     },
     rinkeby: {

@@ -37,6 +37,7 @@ web3.eth.account
 main account = '0x4aaa4e3ce8e9d8a6533b75db54da017e2cf811c8'
 
 web3.eth.getBalance('0x6999e1d9ec10d0b0d06c657e289f55a2e17dea64', function(err,res) { console.log(res.toNumber()) })
+web3.eth.getBalance('0x4aaa4e3ce8e9d8a6533b75db54da017e2cf811c8', function(err,res) { console.log(res.toNumber()) })
 
 
 KittyCore.createAuction(_tokenId,
